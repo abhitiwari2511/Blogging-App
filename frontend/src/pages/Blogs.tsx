@@ -4,6 +4,7 @@ import { useBlogs } from "../hooks";
 
 const Blogs = () => {
   const {loading, blogs} = useBlogs();
+  console.log(blogs); 
 
   if (loading) {
     return <div>
@@ -13,13 +14,22 @@ const Blogs = () => {
 
   return (
     <div>
-      <Appbar />
+      <Appbar blog={blogs[0]} />
       <div className="max-w-xl flex flex-col mx-auto">
-        {blogs.map(blog => <BlogsCard
-        authorName={blog.author.name || "Anonymous"} 
-        title={blog.title}
-        content={blog.content}
-        publishedDate={blog.publishedDate} />)}
+      {blogs && blogs.length > 0 ? (
+        blogs.map(blog => (
+          <BlogsCard
+            key={blog.id}
+            id={blog.id}
+            authorName={blog.author.name || "Anonymous"} 
+            title={blog.title}
+            content={blog.content}
+            publishedDate={blog.publishedDate}
+          />
+        ))
+      ) : (
+        <div>No blogs available</div>
+      )}
       </div>
     </div>
   )

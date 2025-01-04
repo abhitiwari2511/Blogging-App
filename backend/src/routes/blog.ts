@@ -124,24 +124,38 @@ blogRouter.get("/:id", async (c) => {
     // console.log(id);
 
     const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
+        datasourceUrl: c.env.DATABASE_URL
     }).$extends(withAccelerate());
-    const body = await c.req.json();
 
     try { 
-        const blog = await prisma.post.findFirst({
+        const blog = await prisma.post.findUnique({
             where : {
                 id : id
+            },
+            select: {
+              title: true,
+              content: true,
+              id: true,
+              author: {
+                select: {
+                  name: true
+                }
+              }        
             }
         })
-    
+
+        if (!blog) {
+          return c.json({ message: "Blog not found", id }, 404);
+        }
+
         return c.json({
             blog
         })
     } catch (error) {
         c.status(403)
+        console.error("Backend Error:", error);
         return c.json({
-            message : "Error while fetching blogs"
+          message : "Error while fetching blogs"
         })
     }
 });
