@@ -1,8 +1,7 @@
-import { Blogs } from "../hooks"
 import Avatar from "./Avatar"
 import { Link } from "react-router-dom"
 
-const Appbar = ({ blog } : {blog: Blogs}) => {
+const Appbar = () => {
   return (
     <div className="border-b flex justify-between px-10 py-4">
       <Link className="font-bold cursor-pointer flex items-center text-lg" to={"/blogs"}>
@@ -14,7 +13,7 @@ const Appbar = ({ blog } : {blog: Blogs}) => {
             New Blog
           </button>
         </Link>
-        <Avatar name={blog.author.name}/>
+        <Avatar name="User"/>
       </div>
     </div>
   )
