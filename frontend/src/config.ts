@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://backend.hmritm.workers.dev";
+export const BACKEND_URL = "https://backend.korus.workers.dev";
